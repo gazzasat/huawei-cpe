@@ -34,9 +34,13 @@ Steps:
 
 What does it look like:
 =======================
-An example view is as below ( SMARTY 5G SIM on Three Phase 8 monopole filtered by bands to use B20,B28 & B32):
+An example view is as below snapshot from a (UK MVNO) SMARTY 5G SIM test with the CPE Pro on a new Three network Phase 8 'Pole of Wonder' . The 4G is filtered by bands to use B20,B28 & B32 in this setting. The ENDC anchor is only available on this mast plus it is the only one in the immediate area which features B28 and B20 as well as B32 (CA with B20 for downlink only).:
 
 ![util-screenshot](https://user-images.githubusercontent.com/104030357/164083686-494e6751-1462-422d-9b0f-6003775c0b58.png)
+
+Without this band selection the CPE hops around between other closer proximity masts operating on B1 and or B3 which don't yet carry the 5G ENDC director anchor and hence it drops back to (slower) 4G mode frequemntly based on signal strength. You can see that the NSA main band it has locked-on is B28 which acts as the 4G anchor with 5G ENDC handoff as we only have NSA (non standalone) implementations of 5G infrastructure in the UK currently.
+
+Selecting the bands to use is totally useful to influence the way that the router behaves so it is more predictable.
 
 Selecting the 4G Bands:
 =======================
