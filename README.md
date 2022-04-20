@@ -11,7 +11,7 @@ This has been developed and tested on an unlocked (ex Three network) Huawei H112
 |  Web UI version      | WEBUI 10.0.3.1(W2SP60C21)  |
 |  Config file version | H112-370-CUST 8.0.1.3(C21) |
 
-The script should hopefully work on other Huawei router devices such as B525 but some data and features may not be relevantBe prepared to do a factory reset (hard reset using reset button on unit) to recover if it doesn't do what you expect... **Use it at your own risk!**
+The script should hopefully work on other Huawei router devices such as B525 but some data and features may not be relevant. **Be prepared to do a factory reset** (hard reset using reset button on unit) to recover if it doesn't do what you expect... **Use it at your own risk!**
 
 There are some totally useful features which were omitted by many of the branded router firmwares for various carriers - 
 1) controlling the 4G band selection which while not able to lock to a fixed tower of choice, does allow you to select a subset of the 4G bands available to use which can be useful in filtering out stronger bands from non 5G ENDC enabled masts. Updated infrastructure sites generally feature first sight of bands such as B28 and B32 and so you can effectively lock to only that tower to ensure 5G NSA handoff...
