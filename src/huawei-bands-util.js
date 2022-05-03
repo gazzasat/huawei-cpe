@@ -14,9 +14,10 @@ function currentBand() {
 		}, 		
 		success:function(data){
 			vars=['rssi','rsrp','rsrq','sinr','dlbandwidth','ulbandwidth','band','cell_id','nei_cellid', 'plmn','pci','nrsinr','nrrsrp','nrrsrq','nrdlbandwidth']; 
-		
+			
 			for (i=0;i<vars.length;i++) {
-				window[vars[i]]=extractXML(vars[i],data); $('#'+vars[i]).html(window[vars[i]]); 
+				window[vars[i]]=extractXML(vars[i],data); 
+				$('#'+vars[i]).html(window[vars[i]]); 
 				} 
 			
 			hex = Number(cell_id).toString(16); 
@@ -24,9 +25,9 @@ function currentBand() {
 			enbid = parseInt(hex2, 16).toString(); 
 			$('#enbid').html(enbid);
 			
-			setgraph("nr_rsrp",nrrsrp,-130,-60);
 			setgraph("lte_rsrp",rsrp,-130,-60);
 			setgraph("lte_rsrq",rsrq,-16,-3);
+			setgraph("nr_rsrp",nrrsrp,-130,-60);
 		}
 	}); 
 	
@@ -65,7 +66,8 @@ function currentProvider() {
 
 function extractXML(tag, data) {
 	try {
-		return data.split("</"+tag+">")[0].split("<"+tag+">")[1]; 
+		var xml = data.toString();
+		return xml.split("</"+tag+">")[0].split("<"+tag+">")[1]; 
 	} catch(err) {
 		return err.message; 
 	} 
