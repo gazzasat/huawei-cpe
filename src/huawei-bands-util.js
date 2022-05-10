@@ -5,10 +5,24 @@ function currentBand() {
 	$("#dhcp_dns").show(); 
 	$('#dhcp_primary_dns').show(); 
 	$('#dhcp_secondary_dns').show(); 
-	
+	var token;
+	/* add request for the session verification token to be used on subsequent API calls */
+	$.ajax(
+	{
+		type:"GET", async:true, url:'/html/home.html', 
+		error:function(request,status,error){
+			alert("Token Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
+		}, 
+		success:function(data){
+			var datas = data.split('name="csrf_token" content="'); 
+			token = datas[datas.length-1].split('"')[0]; 
+		}
+	});
+
 	$.ajax(
 	{
 		type:"GET", async : true, url: '/api/device/signal', 
+		headers:{'__RequestVerificationToken':token}, 
 		error:function(request,status,error){			
 			alert("Signal Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
 		}, 		
@@ -34,6 +48,7 @@ function currentBand() {
 	$.ajax(
 	{	
 		type:"GET", async : true, url: '/api/net/net-mode', 
+		headers:{'__RequestVerificationToken':token}, 
 		error:function(request,status,error){
 			alert("Signal Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
 		}, 
