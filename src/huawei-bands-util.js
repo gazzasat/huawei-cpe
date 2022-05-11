@@ -9,7 +9,9 @@ function currentBand() {
 	/* add request for the session verification token to be used on subsequent API calls */
 	$.ajax(
 	{
-		type:"GET", async:true, url:'/html/home.html', 
+		type:"GET", async:true, 
+		url:'/html/home.html', 
+		dataType : "html",
 		error:function(request,status,error){
 			alert("Token Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
 		}, 
@@ -21,7 +23,9 @@ function currentBand() {
 
 	$.ajax(
 	{
-		type:"GET", async : true, url: '/api/device/signal', 
+		type:"GET", async : true, 
+		url: '/api/device/signal', 
+		dataType : "xml",
 		headers:{'__RequestVerificationToken':token}, 
 		error:function(request,status,error){			
 			alert("Signal Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
@@ -47,7 +51,9 @@ function currentBand() {
 	
 	$.ajax(
 	{	
-		type:"GET", async : true, url: '/api/net/net-mode', 
+		type:"GET", async : true, 
+		url: '/api/net/net-mode', 
+		dataType : "xml",
 		headers:{'__RequestVerificationToken':token}, 
 		error:function(request,status,error){
 			alert("Signal Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
@@ -64,7 +70,9 @@ function currentBand() {
 function currentProvider() {
 	$.ajax(
 	{	
-		type:"GET", async : true, url: '/api/net/current-plmn', 
+		type:"GET", async : true, 
+		url: '/api/net/current-plmn', 
+		dataType : "xml",
 		error:function(request,status,error){
 			alert("Provider Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
 		}, 
@@ -80,13 +88,26 @@ function currentProvider() {
 }
 
 function extractXML(tag, data) {
-	try {
-		var xml = data.toString();
-		return xml.split("</"+tag+">")[0].split("<"+tag+">")[1]; 
-	} catch(err) {
-		return err.message; 
-	} 
-} 
+
+
+   try {
+		if ( data == null ){
+			console.log("data is null");
+			return null;
+		}
+		
+		if (typeof data === 'object' ) {
+			return data.getElementsByTagName(tag)[0].innerHTML;
+		}
+		
+		if (typeof data === 'string' ) {
+			return data.split("</"+tag+">")[0].split("<"+tag+">")[1]; 
+		}
+	
+    } catch(err) {
+        return err.message;
+    }
+}
 
 function _4GType(data) {
 	if ((data=='7E2880800D5')||(data=='20800800C5')||(data=='20000800C5')) 
@@ -133,7 +154,9 @@ function ltebandselection() {
 		ltesum = ltesum.toString(16); console.log("LTEBand:"+ltesum); } 
 		$.ajax(
 		{
-			type:"GET", async:true, url:'/html/home.html', 
+			type:"GET", async:true, 
+			url:'/html/home.html', 
+			dataType : "html",
 			error:function(request,status,error){
 				alert("Token Error:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
 			}, 
@@ -143,7 +166,11 @@ function ltebandselection() {
 				setTimeout(function(){
 					$.ajax(
 					{
-						type:"POST", async: true, url:'/api/net/net-mode', headers:{'__RequestVerificationToken':token}, contentType: 'application/xml', data:'<request><NetworkMode>00</NetworkMode><NetworkBand>3FFFFFFF</NetworkBand><LTEBand>'+ltesum+'</LTEBand></request>', 
+						type:"POST", async: true, 
+						url:'/api/net/net-mode', 
+						headers:{'__RequestVerificationToken':token}, 
+						contentType: 'application/xml', 
+						data:'<request><NetworkMode>00</NetworkMode><NetworkBand>3FFFFFFF</NetworkBand><LTEBand>'+ltesum+'</LTEBand></request>', 
 						success:function(nd){
 							$("#band").html("<span style=\"color:green;\">OK</span>"); 
 						}, 
